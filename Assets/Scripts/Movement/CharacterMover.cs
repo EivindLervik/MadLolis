@@ -9,6 +9,9 @@ public class CharacterMover : MonoBehaviour {
 	private Vector3 desiredMovement;
 	private bool grounded;
 
+    [Header("Model")]
+    public Transform model;
+
 	[Header("Walking")]
 	public float maxMoveSpeed;
 	public float acceleration;
@@ -28,23 +31,32 @@ public class CharacterMover : MonoBehaviour {
 	void FixedUpdate () {
 		Vector3 force = new Vector3 ();
 
-		force = desiredMovement * acceleration;
+        force = desiredMovement.normalized * acceleration;
+        force.y = body.velocity.y;
+        
+		body.AddForce(model.TransformVector(force));
 
-		body.AddRelativeForce(force);
+        // Deacceleration
+        if(force == Vector3.zero)
+        {
+            Vector3 newVec = body.velocity;
+            newVec.x *= deacceleration;
+            newVec.z *= deacceleration;
+            body.velocity = newVec;
+        }
 
-		if (body.velocity.x > maxMoveSpeed) {
-			Vector3 fixedVelocity = body.velocity;
-			fixedVelocity.x = maxMoveSpeed;
-			body.velocity = fixedVelocity;
-		}
-		if (body.velocity.z > maxMoveSpeed) {
-			Vector3 fixedVelocity = body.velocity;
-			fixedVelocity.z = maxMoveSpeed;
-			body.velocity = fixedVelocity;
-		}
+        // Limit the speed
+        Vector3 planarVel = body.velocity;
+        planarVel.y = 0.0f;
+        if (planarVel.magnitude > maxMoveSpeed)
+        {
+            Vector3 newVec = planarVel.normalized * maxMoveSpeed;
+            newVec.y = body.velocity.y;
+            body.velocity = newVec;
+        }
 
-		// Check if landed
-		Ray ray = new Ray(transform.position + (transform.up * collider.radius * 2.0f), -transform.up);	
+        // Check if landed
+        Ray ray = new Ray(transform.position + (transform.up * collider.radius * 2.0f), -transform.up);	
 		RaycastHit hit;
 		if (Physics.SphereCast (ray, collider.radius, out hit, collider.radius + 0.1f, groundMask)) {
 			grounded = true;
@@ -64,4 +76,9 @@ public class CharacterMover : MonoBehaviour {
 		desiredMovement.y = 0.0f;
 		desiredMovement.z = move.z;
 	}
+
+    public void Turn(float turn)
+    {
+        model.Rotate(transform.up, turn);
+    }
 }

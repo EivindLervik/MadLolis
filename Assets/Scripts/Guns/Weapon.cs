@@ -9,5 +9,57 @@ public class Weapon : MonoBehaviour {
 	public Muzzle muzzle;
 	public Scope scope;
 	public Stock stock;
+    public Reloader reloader;
+
+    public CanvasScript canvas;
+
+    private bool canFire;
+
+    private void Start()
+    {
+        canFire = true;
+        Chamber();
+    }
+
+    public bool Fire()
+    {
+        if (canFire)
+        {
+            if (barrel.Fire())
+            {
+                canFire = false;
+                canvas.CrosshairEffect(barrel.recoil * stock.recoilModifier, 3);
+                StartCoroutine("Fire_C");
+                return true;
+            }
+            
+        }
+        return false;
+    }
+    private IEnumerator Fire_C()
+    {
+        yield return new WaitForSeconds(barrel.recoil * stock.recoilModifier);
+        reloader.Reload();
+        yield return new WaitForSeconds(reloader.GetReloadTime());
+        canFire = true;
+        Chamber();
+    }
+
+    private void Chamber()
+    {
+        int a = magazine.Use(barrel.chamberNumber);
+        barrel.Chamber(a);
+    }
+
+    public void Reload()
+    {
+
+    }
+
+    public float GetRange()
+    {
+        // Change to actual range
+        return 1000;
+    }
 
 }

@@ -2,13 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Bolt : GunPart {
+public class Bolt : Reloader {
 
 	public float backTime;
 	public float waitTime;
 	public float frontTime;
 
-	public void Reload(){
-
-	}
+    public override float GetReloadTime()
+    {
+        return backTime + waitTime + frontTime;
+    }
 }
