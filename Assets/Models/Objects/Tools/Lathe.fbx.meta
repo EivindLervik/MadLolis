@@ -1,16 +1,30 @@
 fileFormatVersion: 2
-guid: 377ee2655e919fa45bbb1b641eaea71b
-timeCreated: 1514737255
+guid: 1ee5bc9dbb4b1414ea815ad610a3bbf1
+timeCreated: 1514816951
 licenseType: Free
 ModelImporter:
   serializedVersion: 22
   fileIDToRecycleName:
     100000: //RootNode
+    100002: Lathe
+    100004: Rotor
+    100006: Stand
     400000: //RootNode
-    2300000: //RootNode
-    3300000: //RootNode
-    4300000: Wrench
-    6400000: //RootNode
+    400002: Lathe
+    400004: Rotor
+    400006: Stand
+    2300000: Lathe
+    2300002: Rotor
+    2300004: Stand
+    3300000: Lathe
+    3300002: Rotor
+    3300004: Stand
+    4300000: Stand
+    4300002: Lathe
+    4300004: Rotor
+    6400000: Lathe
+    6400002: Rotor
+    6400004: Stand
     9500000: //RootNode
   externalObjects:
   - first:
@@ -70,7 +84,7 @@ ModelImporter:
     normalImportMode: 0
     tangentImportMode: 3
     normalCalculationMode: 4
-  importAnimation: 0
+  importAnimation: 1
   copyAvatar: 0
   humanDescription:
     serializedVersion: 2
@@ -89,7 +103,7 @@ ModelImporter:
     hasExtraRoot: 0
     skeletonHasParents: 1
   lastHumanDescriptionAvatarSource: {instanceID: 0}
-  animationType: 0
+  animationType: 2
   humanoidOversampling: 1
   additionalBone: 0
   userData: 

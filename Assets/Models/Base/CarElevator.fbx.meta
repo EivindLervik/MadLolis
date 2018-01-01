@@ -1,23 +1,51 @@
 fileFormatVersion: 2
-guid: 377ee2655e919fa45bbb1b641eaea71b
-timeCreated: 1514737255
+guid: 2546b9985e0e4504a99d06106354d9b4
+timeCreated: 1514806300
 licenseType: Free
 ModelImporter:
   serializedVersion: 22
   fileIDToRecycleName:
     100000: //RootNode
+    100002: Button
+    100004: ButtonScreen
+    100006: Buttonstand
+    100008: CarElevator
+    100010: Stand
     400000: //RootNode
+    400002: Button
+    400004: ButtonScreen
+    400006: Buttonstand
+    400008: CarElevator
+    400010: Stand
     2300000: //RootNode
+    2300002: Button
+    2300004: ButtonScreen
+    2300006: Buttonstand
+    2300008: CarElevator
+    2300010: Stand
     3300000: //RootNode
-    4300000: Wrench
-    6400000: //RootNode
+    3300002: Button
+    3300004: ButtonScreen
+    3300006: Buttonstand
+    3300008: CarElevator
+    3300010: Stand
+    4300000: CarElevator
+    4300002: Buttonstand
+    4300004: ButtonScreen
+    4300006: Button
+    4300008: Stand
+    6400000: Button
+    6400002: ButtonScreen
+    6400004: Buttonstand
+    6400006: CarElevator
+    6400008: Stand
     9500000: //RootNode
   externalObjects:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: phong1
-    second: {fileID: 2100000, guid: 1ec9c3e7fc133c0458e20e5e3d35da50, type: 2}
+    second: {fileID: 2100000, guid: f20bfdcee77101940954c4ac34a5d638, type: 2}
   materials:
     importMaterials: 1
     materialName: 0
@@ -70,7 +98,7 @@ ModelImporter:
     normalImportMode: 0
     tangentImportMode: 3
     normalCalculationMode: 4
-  importAnimation: 0
+  importAnimation: 1
   copyAvatar: 0
   humanDescription:
     serializedVersion: 2
@@ -89,7 +117,7 @@ ModelImporter:
     hasExtraRoot: 0
     skeletonHasParents: 1
   lastHumanDescriptionAvatarSource: {instanceID: 0}
-  animationType: 0
+  animationType: 2
   humanoidOversampling: 1
   additionalBone: 0
   userData: 

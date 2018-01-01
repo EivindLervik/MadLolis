@@ -1,16 +1,72 @@
 fileFormatVersion: 2
-guid: 377ee2655e919fa45bbb1b641eaea71b
-timeCreated: 1514737255
+guid: ce8f4c4419c49364ab90986ee468dbb0
+timeCreated: 1514811085
 licenseType: Free
 ModelImporter:
   serializedVersion: 22
   fileIDToRecycleName:
-    100000: //RootNode
-    400000: //RootNode
-    2300000: //RootNode
-    3300000: //RootNode
-    4300000: Wrench
-    6400000: //RootNode
+    100000: PowerStand
+    100002: Soldering
+    100004: Soldering_Iron
+    100006: Soldering_Iron_Wire
+    100008: //RootNode
+    100010: Welder
+    100012: Welder_Gun
+    100014: Welder_Main_Wire
+    100016: Wlder_Supply_Wire
+    100018: Light
+    100020: Light_Wire
+    400000: PowerStand
+    400002: Soldering
+    400004: Soldering_Iron
+    400006: Soldering_Iron_Wire
+    400008: //RootNode
+    400010: Welder
+    400012: Welder_Gun
+    400014: Welder_Main_Wire
+    400016: Wlder_Supply_Wire
+    400018: Light
+    400020: Light_Wire
+    2300000: PowerStand
+    2300002: Soldering
+    2300004: Soldering_Iron
+    2300006: Soldering_Iron_Wire
+    2300008: Welder
+    2300010: Welder_Gun
+    2300012: Welder_Main_Wire
+    2300014: Wlder_Supply_Wire
+    2300016: Light
+    2300018: Light_Wire
+    3300000: PowerStand
+    3300002: Soldering
+    3300004: Soldering_Iron
+    3300006: Soldering_Iron_Wire
+    3300008: Welder
+    3300010: Welder_Gun
+    3300012: Welder_Main_Wire
+    3300014: Wlder_Supply_Wire
+    3300016: Light
+    3300018: Light_Wire
+    4300000: PowerStand
+    4300002: Welder
+    4300004: Welder_Main_Wire
+    4300006: Wlder_Supply_Wire
+    4300008: Welder_Gun
+    4300010: Soldering
+    4300012: Soldering_Iron
+    4300014: Soldering_Iron_Wire
+    4300016: Light
+    4300018: Light_Wire
+    6400000: PowerStand
+    6400002: Soldering
+    6400004: Soldering_Iron
+    6400006: Soldering_Iron_Wire
+    6400008: Welder
+    6400010: Welder_Gun
+    6400012: Welder_Main_Wire
+    6400014: Wlder_Supply_Wire
+    6400016: Light
+    6400018: Light_Wire
     9500000: //RootNode
   externalObjects:
   - first:
@@ -70,7 +126,7 @@ ModelImporter:
     normalImportMode: 0
     tangentImportMode: 3
     normalCalculationMode: 4
-  importAnimation: 0
+  importAnimation: 1
   copyAvatar: 0
   humanDescription:
     serializedVersion: 2
@@ -89,7 +145,7 @@ ModelImporter:
     hasExtraRoot: 0
     skeletonHasParents: 1
   lastHumanDescriptionAvatarSource: {instanceID: 0}
-  animationType: 0
+  animationType: 2
   humanoidOversampling: 1
   additionalBone: 0
   userData: 
