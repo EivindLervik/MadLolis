@@ -19,6 +19,9 @@ public class CanvasScript : MonoBehaviour {
     [Header("Lathe")]
     public GameObject lathe_MENU;
 
+	[Header("Storage")]
+	public GameObject storage_MENU;
+
     private Vector3 up_SP;
     private Vector3 down_SP;
     private Vector3 left_SP;
@@ -62,13 +65,20 @@ public class CanvasScript : MonoBehaviour {
         this.characterInput = characterInput;
     }
 
+	// Lathe
     public void OpenLatheMenu()
     {
-        characterInput.AllowInput(false);
-        HideCrosshair();
-        HideInteraction();
+		FreezePlayer ();
         lathe_MENU.SetActive(true);
     }
+
+	// Storage
+	public void OpenStorageMenu(Storage storage)
+	{
+		FreezePlayer ();
+		lathe_MENU.SetActive(true);
+		// Populate storage
+	}
 
     public void PromptInteraction(string text, KeyCode key)
     {
@@ -99,6 +109,7 @@ public class CanvasScript : MonoBehaviour {
     {
         interaction_MENU.SetActive(false);
         lathe_MENU.SetActive(false);
+		storage_MENU.SetActive(false);
 
         if(characterInput != null)
         {
@@ -122,5 +133,9 @@ public class CanvasScript : MonoBehaviour {
         right.gameObject.SetActive(true);
     }
 
-
+	private void FreezePlayer(){
+		characterInput.AllowInput(false);
+		HideCrosshair();
+		HideInteraction();
+	}
 }

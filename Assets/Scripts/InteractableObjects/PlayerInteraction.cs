@@ -49,9 +49,18 @@ public class PlayerInteraction : MonoBehaviour {
             {
                 switch (interactable.objectType)
                 {
+					case InteractableObject.Elevator:
+						
+						break;
                     case InteractableObject.Lathe:
                         canvas.OpenLatheMenu();
                         break;
+					case InteractableObject.Storage:
+						canvas.OpenStorageMenu ((Storage)interactable);
+						break;
+					case InteractableObject.Welder:
+						
+						break;
                 }
             }
         }
