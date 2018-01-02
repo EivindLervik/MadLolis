@@ -22,6 +22,10 @@ public class CanvasScript : MonoBehaviour {
 	[Header("Storage")]
 	public GameObject storage_MENU;
 
+    [Header("Speedometer")]
+    public GameObject speedometer;
+    public RectTransform speedometerNeedle;
+
     private Vector3 up_SP;
     private Vector3 down_SP;
     private Vector3 left_SP;
@@ -32,32 +36,39 @@ public class CanvasScript : MonoBehaviour {
 
     private void Start()
     {
-        up_SP = up.position;
-        down_SP = down.position;
-        left_SP = left.position;
-        right_SP = right.position;
+        if(up != null && down != null && left != null && right != null)
+        {
+            up_SP = up.position;
+            down_SP = down.position;
+            left_SP = left.position;
+            right_SP = right.position;
+        }
 
         CLoseAllMenues();
     }
 
     private void Update()
     {
-        if(up.position != up_SP)
+        if(up != null && down != null && left != null && right != null)
         {
-            up.position = Vector3.Lerp(up.position, up_SP, Time.deltaTime * fadeback);
+            if (up.position != up_SP)
+            {
+                up.position = Vector3.Lerp(up.position, up_SP, Time.deltaTime * fadeback);
+            }
+            if (down.position != down_SP)
+            {
+                down.position = Vector3.Lerp(down.position, down_SP, Time.deltaTime * fadeback);
+            }
+            if (left.position != left_SP)
+            {
+                left.position = Vector3.Lerp(left.position, left_SP, Time.deltaTime * fadeback);
+            }
+            if (right.position != right_SP)
+            {
+                right.position = Vector3.Lerp(right.position, right_SP, Time.deltaTime * fadeback);
+            }
         }
-        if (down.position != down_SP)
-        {
-            down.position = Vector3.Lerp(down.position, down_SP, Time.deltaTime * fadeback);
-        }
-        if (left.position != left_SP)
-        {
-            left.position = Vector3.Lerp(left.position, left_SP, Time.deltaTime * fadeback);
-        }
-        if (right.position != right_SP)
-        {
-            right.position = Vector3.Lerp(right.position, right_SP, Time.deltaTime * fadeback);
-        }
+        
     }
 
     public void SetCharacterInput(CharacterInput characterInput)
@@ -65,7 +76,22 @@ public class CanvasScript : MonoBehaviour {
         this.characterInput = characterInput;
     }
 
-	// Lathe
+#region Speedometer
+    public void ShowSpeedometer()
+    {
+        speedometer.SetActive(true);
+    }
+    public void HideSpeedometer()
+    {
+        speedometer.SetActive(false);
+    }
+    public void UpdateSpeedometer(float speed)
+    {
+        float index = speed / 180.0f;
+        speedometerNeedle.localEulerAngles = new Vector3(0.0f, 0.0f, (index * - 180.0f) + 90.0f);
+    }
+#endregion
+    // Lathe
     public void OpenLatheMenu()
     {
 		FreezePlayer ();
@@ -107,13 +133,22 @@ public class CanvasScript : MonoBehaviour {
 
     private void CLoseAllMenues()
     {
-        interaction_MENU.SetActive(false);
-        lathe_MENU.SetActive(false);
-		storage_MENU.SetActive(false);
+        CloseMenu(interaction_MENU);
+        CloseMenu(lathe_MENU);
+        CloseMenu(storage_MENU);
+        //CloseMenu(speedometer);
 
-        if(characterInput != null)
+        if (characterInput != null)
         {
             characterInput.AllowInput(true);
+        }
+    }
+
+    private void CloseMenu(GameObject go)
+    {
+        if(go != null)
+        {
+            go.SetActive(false);
         }
     }
 
