@@ -14,6 +14,9 @@ public class VehicleMotor : MonoBehaviour {
     private AudioSource audioSource;
     private int currentGear;
 
+	private float throttle;
+	private float steer;
+
     private void Start()
     {
         body = GetComponent<Rigidbody>();
@@ -92,8 +95,8 @@ public class VehicleMotor : MonoBehaviour {
     {
         float speed = body.velocity.magnitude;
 
-        float motor = maxMotorTorque * Input.GetAxis("Vertical");
-        steeringAngle = Mathf.Lerp(steeringAngle, Input.GetAxis("Horizontal"), Time.deltaTime * steeringForce);
+		float motor = maxMotorTorque * throttle;
+		steeringAngle = Mathf.Lerp(steeringAngle, steer, Time.deltaTime * steeringForce);
         float steering = maxSteeringAngle * steeringAngle;
 
         foreach (AxleInfo axleInfo in axleInfos)
@@ -120,6 +123,14 @@ public class VehicleMotor : MonoBehaviour {
             ApplyLocalPositionToVisuals(axleInfo.rightWheel, axleInfo.rightWheel_Visual);
         }
     }
+
+	public void UpdateThrottle(float throttle){
+		this.throttle = throttle;
+	}
+
+	public void UpdateSteer(float steer){
+		this.steer = steer;
+	}
 }
 
 [System.Serializable]

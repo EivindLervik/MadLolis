@@ -6,6 +6,9 @@ public class VehicleController : MonoBehaviour {
 
     public CanvasScript canvas;
 
+	public string steerAxis;
+	public string throttleAxis;
+
     private VehicleMotor vehicleMotor;
 
 	// Use this for initialization
@@ -16,6 +19,9 @@ public class VehicleController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		vehicleMotor.UpdateSteer (Input.GetAxis(steerAxis));
+		vehicleMotor.UpdateThrottle (Input.GetAxis(throttleAxis));
+
         canvas.UpdateSpeedometer(vehicleMotor.GetSpeed());
 	}
 }

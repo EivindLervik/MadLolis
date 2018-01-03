@@ -4,13 +4,22 @@ using UnityEngine;
 
 public class DataHandler : MonoBehaviour {
 
-	// Use this for initialization
-	void Start () {
-		
+	public enum InGameObject{
+		// Ores
+		Iron_Ore
+		,Coal_Ore
+		,Silver_Ore
+		,Gold_Ore
+		,Diamond
+
+		// Items
+
 	}
-	
-	// Update is called once per frame
-	void Update () {
-		
+
+	public enum InGameObjectType{
+		Resource, Weapon,
 	}
+
+	public List<StorageItem> items;
+
 }

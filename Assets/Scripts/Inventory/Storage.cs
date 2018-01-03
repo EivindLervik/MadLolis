@@ -4,6 +4,12 @@ using UnityEngine;
 
 public class Storage : Interactable {
 
-	public List<StorageItem> items;
+	public List<StorageEntry> items;
 
+}
+
+[System.Serializable]
+public class StorageEntry{
+	public DataHandler.InGameObject item;
+	public int quantity;
 }

@@ -5,8 +5,10 @@ using UnityEngine;
 [System.Serializable]
 public class StorageItem {
 
-	public string itemName;
-	public int quantity;
+	public DataHandler.InGameObject inGameObject;
+	public DataHandler.InGameObjectType inGameObjectType;
+	public string itemInfo;
+	public string description;
 	public Sprite icon;
 	public GameObject itemObject;
 
