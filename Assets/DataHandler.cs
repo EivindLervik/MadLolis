@@ -10,7 +10,7 @@ public class DataHandler : MonoBehaviour {
 		,Coal_Ore
 		,Silver_Ore
 		,Gold_Ore
-		,Diamond
+		,Diamond_Ore
 
 		// Items
 
@@ -21,5 +21,30 @@ public class DataHandler : MonoBehaviour {
 	}
 
 	public List<StorageItem> items;
+
+    private static Dictionary<InGameObject, StorageItem> itemsDict;
+    private static string playerName;
+
+    private void Awake()
+    {
+        itemsDict = new Dictionary<InGameObject, StorageItem>();
+
+        foreach(StorageItem si in items)
+        {
+            itemsDict.Add(si.inGameObject, si);
+        }
+
+        playerName = "Eivind";
+    }
+
+    public static StorageItem GetStorageItem(InGameObject igo)
+    {
+        return itemsDict[igo];
+    }
+
+    public static string GetPlayerName()
+    {
+        return playerName;
+    }
 
 }

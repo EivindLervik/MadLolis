@@ -52,7 +52,7 @@ public class VehicleMotor : MonoBehaviour {
 
         if (currentGear == 0)
         {
-            audioSource.pitch = ((speed / (gears[currentGear].highSpeed + gears[currentGear].lowSpeed)) * 2.5f) + 0.5f;
+            audioSource.pitch = Mathf.Clamp(((speed / (gears[currentGear].highSpeed + gears[currentGear].lowSpeed)) * 2.5f) + 0.5f, 0.5f, 3.0f);
         }
         else if (currentGear == 1)
         {
@@ -110,8 +110,16 @@ public class VehicleMotor : MonoBehaviour {
             {
                 if(currentGear == 0)
                 {
-                    axleInfo.leftWheel.motorTorque = motor * gears[currentGear].effect.Evaluate(speed / (gears[currentGear].highSpeed - gears[currentGear].lowSpeed));
-                    axleInfo.rightWheel.motorTorque = motor * gears[currentGear].effect.Evaluate(speed / (gears[currentGear].highSpeed - gears[currentGear].lowSpeed));
+                    if (motor < 0.0f)
+                    {
+                        axleInfo.leftWheel.motorTorque = motor * gears[currentGear].effect.Evaluate(speed / (gears[currentGear].highSpeed - gears[currentGear].lowSpeed));
+                        axleInfo.rightWheel.motorTorque = motor * gears[currentGear].effect.Evaluate(speed / (gears[currentGear].highSpeed - gears[currentGear].lowSpeed));
+                    }
+                    else
+                    {
+                        axleInfo.leftWheel.motorTorque = motor;
+                        axleInfo.rightWheel.motorTorque = motor;
+                    }
                 }
                 else
                 {

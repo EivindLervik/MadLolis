@@ -7,6 +7,7 @@ public class PlayerInteraction : MonoBehaviour {
     public CanvasScript canvas;
 
     private bool inside;
+    private bool isInMenu;
     private Interactable interactable;
 
     private CharacterInput characterInput;
@@ -29,7 +30,7 @@ public class PlayerInteraction : MonoBehaviour {
         {
             case "Interactable":
                 interactable = other.GetComponent<Interactable>();
-                canvas.PromptInteraction("Use " + interactable.objectType.ToString(), interactable.activationKey);
+                canvas.PromptInteraction(interactable.interactableType + " " + interactable.objectName, interactable.activationKey);
                 break;
         }
     }
@@ -53,14 +54,31 @@ public class PlayerInteraction : MonoBehaviour {
 						
 						break;
                     case InteractableObject.Lathe:
-                        canvas.OpenLatheMenu();
+                        if (isInMenu)
+                        {
+                            canvas.CloseLatheMenu();
+                        }
+                        else
+                        {
+                            canvas.OpenLatheMenu();
+                        }
+                        isInMenu = !isInMenu;
                         break;
 					case InteractableObject.Storage:
-						canvas.OpenStorageMenu ((Storage)interactable);
-						break;
+                        if (isInMenu)
+                        {
+                            canvas.CloseStorageMenu();
+                        }
+                        else
+                        {
+                            canvas.OpenStorageMenu((Storage)interactable);
+                        }
+                        isInMenu = !isInMenu;
+                        break;
 					case InteractableObject.Welder:
-						
-						break;
+                        isInMenu = !isInMenu;
+                        // Welder
+                        break;
                 }
             }
         }
