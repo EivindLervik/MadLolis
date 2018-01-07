@@ -5,7 +5,7 @@ using UnityEngine;
 public class CharacterMover : MonoBehaviour {
 
 	private Rigidbody body;
-	private CapsuleCollider collider;
+	private CapsuleCollider characterCollider;
 	private Vector3 desiredMovement;
 	private bool grounded;
 
@@ -24,7 +24,7 @@ public class CharacterMover : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		body = GetComponent<Rigidbody> ();
-		collider = GetComponent<CapsuleCollider> ();
+		characterCollider = GetComponent<CapsuleCollider> ();
 	}
 	
 	// Update is called once per frame
@@ -56,9 +56,9 @@ public class CharacterMover : MonoBehaviour {
         }
 
         // Check if landed
-        Ray ray = new Ray(transform.position + (transform.up * collider.radius * 2.0f), -transform.up);	
+        Ray ray = new Ray(transform.position + (transform.up * characterCollider.radius * 2.0f), -transform.up);	
 		RaycastHit hit;
-		if (Physics.SphereCast (ray, collider.radius, out hit, collider.radius + 0.1f, groundMask)) {
+		if (Physics.SphereCast (ray, characterCollider.radius, out hit, characterCollider.radius + 0.1f, groundMask)) {
 			grounded = true;
 		} else {
 			grounded = false;

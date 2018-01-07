@@ -4,16 +4,16 @@ using UnityEngine;
 
 public class Reloader : GunPart {
 
-    private Animation animation;
+    private Animation reloadAnimation;
 
     private void Start()
     {
-        animation = GetComponent<Animation>();
+        reloadAnimation = GetComponent<Animation>();
     }
 
     public void Reload()
     {
-        animation.Play();
+        reloadAnimation.Play();
     }
 
     public virtual float GetReloadTime()

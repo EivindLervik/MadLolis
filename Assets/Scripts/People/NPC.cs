@@ -7,6 +7,19 @@ public class NPC : Character {
 	[Header("NPC")]
 	public float affection;
 	public float liking;
-	public DialogueTree dialogueTree;
+
+    private DialogueTree dialogueTree;
+
+    private void Start()
+    {
+        dialogueTree = GetComponentInChildren<DialogueTree>();
+        dialogueTree.Setup(this, GetComponentsInChildren<DialogueEntry>());
+    }
+
+    public DialogueTree StartDialogue(Character player, out DialogueEntry de)
+    {
+        de = dialogueTree.StartDialogue(player);
+        return dialogueTree;
+    }
 
 }

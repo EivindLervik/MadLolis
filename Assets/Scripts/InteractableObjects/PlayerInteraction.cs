@@ -6,24 +6,24 @@ public class PlayerInteraction : MonoBehaviour {
 
     public CanvasScript canvas;
 
-    private bool inside;
     private bool isInMenu;
     private Interactable interactable;
+    private NPC npc;
 
     private CharacterInput characterInput;
 
     private void Start()
     {
         characterInput = GetComponent<CharacterInput>();
+        canvas.SetPlayerInteraction(this);
         canvas.SetCharacterInput(characterInput);
+        canvas.SetPlayer(GetComponent<Character>());
 
         Cursor.visible = false;
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        inside = true;
-
         string hitTag = other.transform.tag;
 
         switch (hitTag)
@@ -32,19 +32,38 @@ public class PlayerInteraction : MonoBehaviour {
                 interactable = other.GetComponent<Interactable>();
                 canvas.PromptInteraction(interactable.interactableType + " " + interactable.objectName, interactable.activationKey);
                 break;
+            case "Talkable":
+                npc = other.GetComponent<NPC>();
+                canvas.PromptInteraction("Talk to " + npc.characterName, KeyCode.E);
+                break;
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        inside = false;
         canvas.HideInteraction();
         interactable = null;
+        npc = null;
     }
 
     private void Update()
     {
-        if (inside)
+        if (npc != null)
+        {
+            if (Input.GetKeyDown(KeyCode.E))
+            {
+                if (isInMenu)
+                {
+                    canvas.CloseDialogueMenu();
+                }
+                else
+                {
+                    canvas.OpenDialogueMenu(npc);
+                }
+                isInMenu = !isInMenu;
+            }
+        }
+        if (interactable != null)
         {
             if (Input.GetKeyDown(interactable.activationKey))
             {
@@ -82,6 +101,11 @@ public class PlayerInteraction : MonoBehaviour {
                 }
             }
         }
+    }
+
+    public void EnablePlayerInteraction()
+    {
+        isInMenu = false;
     }
 
 }

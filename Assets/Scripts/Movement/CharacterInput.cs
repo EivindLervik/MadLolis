@@ -9,7 +9,7 @@ public class CharacterInput : MonoBehaviour {
 
 	private CharacterMover motor;
     private Weapon weapon;
-    private Camera camera;
+    private Camera playerCamera;
 
     private bool allowInput;
 
@@ -17,7 +17,7 @@ public class CharacterInput : MonoBehaviour {
     void Start () {
 		motor = GetComponent<CharacterMover> ();
         weapon = GetComponentInChildren<Weapon> ();
-        camera = cameraRig.GetComponentInChildren<Camera>();
+        playerCamera = cameraRig.GetComponentInChildren<Camera>();
 
         allowInput = true;
 	}
@@ -41,7 +41,7 @@ public class CharacterInput : MonoBehaviour {
             {
                 if (weapon.Fire())
                 {
-                    Ray ray = camera.ViewportPointToRay(new Vector3(0.5F, 0.5F, 0));
+                    Ray ray = playerCamera.ViewportPointToRay(new Vector3(0.5F, 0.5F, 0));
                     RaycastHit hit;
                     if (Physics.Raycast(ray, out hit, weapon.GetRange()))
                     {

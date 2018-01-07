@@ -7,23 +7,27 @@ public enum DialogueEntryType{
 }
 	
 [System.Serializable]
-public class DialogueEntry : MonoBehaviour{
+public class DialogueEntry : MonoBehaviour {
 
 	[Header("Dialogue Entry")]
 	public string dialogueTag;
-	public DialogueEntryType dialogueEntryType;
+	protected DialogueEntryType dialogueEntryType;
+    protected NPC npc;
+    protected Character player;
 
-	// TEXT
-	public string nextDialogueTag;
-	public string dialogueText;
-	public AudioClip voice;
+    public void Setup(NPC npc)
+    {
+        this.npc = npc;
+    }
 
-	// FORK
-	public string nextDialogueTag_Success;
-	public string nextDialogueTag_Failure;
-	public DialogueRequirement[] forkRequirements;
+    public DialogueEntryType GetDialogueEntryType()
+    {
+        return dialogueEntryType;
+    }
 
-	// CHOICE
-	public List<DialogueOption> dialogueOptions;
+    public void LinkPlayer(Character player)
+    {
+        this.player = player;
+    }
 
 }

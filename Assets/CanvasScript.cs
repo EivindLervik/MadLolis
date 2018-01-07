@@ -16,6 +16,15 @@ public class CanvasScript : MonoBehaviour {
     public Text interaction_Text;
     public Text interaction_Key;
 
+    [Header("Dialogue")]
+    public GameObject dialogue_MENU;
+    public Text dialogue_Header;
+    public Text dialogue_Text;
+    public RectTransform dialogue_Choices;
+    public KeyCode continueKey;
+    private DialogueTree dialogueTree;
+    private DialogueEntry currentEntry;
+
     [Header("Lathe")]
     public GameObject lathe_MENU;
 
@@ -48,6 +57,8 @@ public class CanvasScript : MonoBehaviour {
 
     private float fadeback;
     private CharacterInput characterInput;
+    private PlayerInteraction playerInteraction;
+    private Character player;
 
     private void Start()
     {
@@ -83,6 +94,14 @@ public class CanvasScript : MonoBehaviour {
                 right.position = Vector3.Lerp(right.position, right_SP, Time.deltaTime * fadeback);
             }
         }
+
+        if(dialogueTree != null && currentEntry != null)
+        {
+            if (Input.GetKeyDown(continueKey))
+            {
+                ContinueDialogue();
+            }
+        }
         
     }
 
@@ -91,7 +110,17 @@ public class CanvasScript : MonoBehaviour {
         this.characterInput = characterInput;
     }
 
-#region Speedometer
+    public void SetPlayerInteraction(PlayerInteraction playerInteraction)
+    {
+        this.playerInteraction = playerInteraction;
+    }
+
+    public void SetPlayer(Character player)
+    {
+        this.player = player;
+    }
+
+    #region Speedometer
     public void ShowSpeedometer()
     {
         speedometer.SetActive(true);
@@ -119,6 +148,7 @@ public class CanvasScript : MonoBehaviour {
         Cursor.visible = false;
         AllowInput();
         ShowCrosshair();
+        interaction_MENU.SetActive(true);
         CloseMenu(lathe_MENU);
     }
     #endregion
@@ -130,7 +160,7 @@ public class CanvasScript : MonoBehaviour {
         FreezePlayer ();
 		storage_MENU.SetActive(true);
         storage_Name.text = storage.objectName;
-        storage_PlayerName.text = DataHandler.GetPlayerName();
+        storage_PlayerName.text = player.characterName;
 
         // storage_StorageInventory;
         // storage_PlayerInventory;
@@ -314,10 +344,83 @@ public class CanvasScript : MonoBehaviour {
         Cursor.visible = false;
         AllowInput();
         ShowCrosshair();
+        interaction_MENU.SetActive(true);
         CloseMenu(storage_MENU);
+    }
+    #endregion
+
+#region Dialogue
+    public void OpenDialogueMenu(NPC npc)
+    {
+        Cursor.visible = true;
+        FreezePlayer();
+        dialogue_MENU.SetActive(true);
+
+        DialogueEntry de;
+        dialogueTree = npc.StartDialogue(player, out de);
+        currentEntry = de;
+
+        dialogue_Header.text = npc.characterName;
+        DisplayDialogueEntry();
+}
+    private void ContinueDialogue()
+    {
+        currentEntry = dialogueTree.Proceed(currentEntry);
+
+        if(currentEntry == null)
+        {
+            CloseDialogueMenu();
+        }
+        else
+        {
+            DisplayDialogueEntry();
+        }
+    }
+    private void DisplayDialogueEntry()
+    {
+        if(currentEntry.GetDialogueEntryType() == DialogueEntryType.Text)
+        {
+            dialogue_Text.gameObject.SetActive(true);
+            dialogue_Choices.gameObject.SetActive(false);
+
+            DialogueText dt = (DialogueText)currentEntry;
+            dialogue_Text.text = dt.dialogueText;
+        }
+        else if (currentEntry.GetDialogueEntryType() == DialogueEntryType.Fork)
+        {
+            dialogue_Text.gameObject.SetActive(false);
+            dialogue_Choices.gameObject.SetActive(false);
+
+            ContinueDialogue();
+        }
+        else if (currentEntry.GetDialogueEntryType() == DialogueEntryType.Choice)
+        {
+            dialogue_Text.gameObject.SetActive(false);
+            dialogue_Choices.gameObject.SetActive(true);
+
+            // Implement Choices
+        }
+
+        // public Text dialogue_Text;
+        // public RectTransform dialogue_Choices;
+    }
+    public void CloseDialogueMenu()
+    {
+        Cursor.visible = false;
+        AllowInput();
+        ShowCrosshair();
+        interaction_MENU.SetActive(true);
+        playerInteraction.EnablePlayerInteraction();
+        CloseMenu(dialogue_MENU);
+
+        currentEntry = null;
+
+        dialogueTree = null;
+        currentEntry = null;
     }
 #endregion
 
+    #region Interaction
     public void PromptInteraction(string text, KeyCode key)
     {
         interaction_MENU.SetActive(true);
@@ -329,6 +432,8 @@ public class CanvasScript : MonoBehaviour {
     {
         interaction_MENU.SetActive(false);
     }
+#endregion
+
 
     public void CrosshairEffect(float magnitude, float fadeback)
     {
@@ -349,6 +454,7 @@ public class CanvasScript : MonoBehaviour {
         CloseMenu(interaction_MENU);
         CloseMenu(lathe_MENU);
         CloseMenu(storage_MENU);
+        CloseMenu(dialogue_MENU);
         //CloseMenu(speedometer);
 
         AllowInput();

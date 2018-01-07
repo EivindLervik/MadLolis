@@ -7,6 +7,6 @@ public class Character : MonoBehaviour {
 	[Header("Character")]
 	public string characterName;
 	public float health = 100;
-	public float money;
+	public int money;
 
 }
