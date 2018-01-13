@@ -4,7 +4,7 @@ using UnityEngine;
 
 public enum InteractableObject
 {
-    Lathe, Elevator, Welder, Storage
+    Lathe, Elevator, Welder, Storage, Anvil
 }
 
 public enum InteractableType

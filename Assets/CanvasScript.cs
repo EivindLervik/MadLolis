@@ -21,6 +21,14 @@ public class CanvasScript : MonoBehaviour {
     public Text dialogue_Header;
     public Text dialogue_Text;
     public RectTransform dialogue_Choices;
+    public RectTransform dialogue_DialogueEntry;
+    public RectTransform dialogue_DialogueInventory;
+    private List<DialogueListItem> dialogue_DialogueListOfEntries;
+    public float dialogue_ItemsPerPage;
+    public float dialogue_ItemsSpace;
+    public float dialogue_ItemsTopSpace;
+    public float dialogue_ItemsBottomSpace;
+    public GameObject dialogue_Item;
     public KeyCode continueKey;
     private DialogueTree dialogueTree;
     private DialogueEntry currentEntry;
@@ -161,12 +169,6 @@ public class CanvasScript : MonoBehaviour {
 		storage_MENU.SetActive(true);
         storage_Name.text = storage.objectName;
         storage_PlayerName.text = player.characterName;
-
-        // storage_StorageInventory;
-        // storage_PlayerInventory;
-        // storage_StorageEntry;
-        // storage_PlayerEntry;
-        // storage_Item;
 
         storage_StorageStorage = storage;
 
@@ -366,8 +368,16 @@ public class CanvasScript : MonoBehaviour {
     private void ContinueDialogue()
     {
         currentEntry = dialogueTree.Proceed(currentEntry);
-
-        if(currentEntry == null)
+        DialogueIsEnd();
+    }
+    public void ChooseOption(DialogueOption option)
+    {
+        currentEntry = dialogueTree.ChooseCoice(option);
+        DialogueIsEnd();
+    }
+    private void DialogueIsEnd()
+    {
+        if (currentEntry == null)
         {
             CloseDialogueMenu();
         }
@@ -398,11 +408,36 @@ public class CanvasScript : MonoBehaviour {
             dialogue_Text.gameObject.SetActive(false);
             dialogue_Choices.gameObject.SetActive(true);
 
-            // Implement Choices
-        }
+            float dialogue_frameHeight = dialogue_DialogueInventory.rect.height;
+            float dialogue_itemHeight = dialogue_frameHeight / dialogue_ItemsPerPage;
+            float dialogue_itemSpace = dialogue_itemHeight / dialogue_ItemsSpace;
 
-        // public Text dialogue_Text;
-        // public RectTransform dialogue_Choices;
+            dialogue_DialogueListOfEntries = new List<DialogueListItem>();
+
+            DialogueChoice dc = (DialogueChoice)currentEntry;
+            dialogue_DialogueEntry.sizeDelta = new Vector2(dialogue_DialogueEntry.sizeDelta.x, (dc.dialogueOptions.Count * (dialogue_itemHeight + dialogue_itemSpace)) + dialogue_ItemsBottomSpace + dialogue_ItemsTopSpace);
+
+            int index = 0;
+            foreach (DialogueOption option in dc.dialogueOptions)
+            {
+                DialogueListItem dli = Instantiate(dialogue_Item, dialogue_DialogueEntry).GetComponent<DialogueListItem>();
+                RectTransform itemRect = dli.GetComponent<RectTransform>();
+
+                dialogue_DialogueListOfEntries.Add(dli);
+
+                Vector2 itemRectSize = itemRect.sizeDelta;
+                itemRectSize.y = dialogue_itemHeight;
+                itemRect.sizeDelta = itemRectSize;
+
+                Vector3 itemRectPos = itemRect.localPosition;
+                itemRectPos.y -= dialogue_ItemsTopSpace + (index * (dialogue_itemSpace + dialogue_itemHeight));
+                itemRect.localPosition = itemRectPos;
+
+                dli.Populate(this, option, dc, option.optionText);
+
+                index++;
+            }
+        }
     }
     public void CloseDialogueMenu()
     {

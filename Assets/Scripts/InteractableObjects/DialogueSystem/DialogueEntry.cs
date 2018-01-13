@@ -30,4 +30,14 @@ public class DialogueEntry : MonoBehaviour {
         this.player = player;
     }
 
+    public Character GetPlayer()
+    {
+        return player;
+    }
+
+    public NPC GetNPC()
+    {
+        return npc;
+    }
+
 }

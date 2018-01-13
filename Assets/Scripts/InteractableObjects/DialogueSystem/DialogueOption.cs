@@ -2,10 +2,22 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DialogueOption : ScriptableObject {
+[System.Serializable]
+public class DialogueOption {
 
 	public string nextDialogueTag;
 	public string optionText;
 	public List<DialogueRequirement> requirements;
-	public List<DialogueEffect> effects;
+
+    public bool Check(NPC npc, Character player)
+    {
+        foreach(DialogueRequirement dr in requirements)
+        {
+            if(!dr.Check(npc, player))
+            {
+                return false;
+            }
+        }
+        return true;
+    }
 }

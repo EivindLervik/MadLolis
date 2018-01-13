@@ -55,4 +55,20 @@ public class DialogueTree : MonoBehaviour {
         }
     }
 
+    public DialogueEntry ChooseCoice(DialogueOption option)
+    {
+        string key = "exit";
+
+        key = option.nextDialogueTag;
+
+        if (key.Equals("exit"))
+        {
+            return null;
+        }
+        else
+        {
+            return dialogueEntries[key];
+        }
+    }
+
 }

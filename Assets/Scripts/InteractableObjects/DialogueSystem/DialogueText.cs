@@ -8,6 +8,7 @@ public class DialogueText : DialogueEntry {
     public string nextDialogueTag;
     public string dialogueText;
     public AudioClip voice;
+    public List<DialogueEffect> effects;
 
     private void Start()
     {
