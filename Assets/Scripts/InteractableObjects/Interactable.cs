@@ -9,7 +9,7 @@ public enum InteractableObject
 
 public enum InteractableType
 {
-    Use, Open, Activate
+    Use, Open, Activate, Search
 }
 
 public class Interactable : MonoBehaviour {

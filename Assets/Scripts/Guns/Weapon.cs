@@ -51,6 +51,11 @@ public class Weapon : MonoBehaviour {
         barrel.Chamber(a);
     }
 
+    public float GetDamage()
+    {
+        return barrel.GetDamage();
+    }
+
     public void Reload()
     {
 

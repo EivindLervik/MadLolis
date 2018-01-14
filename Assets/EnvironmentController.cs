@@ -9,6 +9,8 @@ public class EnvironmentController : MonoBehaviour {
         Sunny, Cloudy, Overcast, Raining, HeavyRain, Thunderstorm, 
     }
 
+    public Transform player;
+
     [Header("Weather Objects")]
     public GameObject rain;
     public GameObject dayNight;
@@ -89,6 +91,11 @@ public class EnvironmentController : MonoBehaviour {
                 UpdateWeather(thunderstormWeather);
                 break;
         }
+
+        // Place at player
+        Vector3 newPos = player.position;
+        //newPos.y = 0.0f;
+        transform.position = newPos;
     }
 
     private void UpdateWeather(WeatherDefinition wd)
@@ -99,8 +106,7 @@ public class EnvironmentController : MonoBehaviour {
         rainSound.volume = Mathf.Lerp(rainSound.volume, Mathf.Clamp(wd.rainAmount / 3000.0f, 0.0f, 1.0f), Time.deltaTime * transitionSpeed);
 
         // Fog
-        RenderSettings.fogStartDistance = Mathf.Lerp(RenderSettings.fogStartDistance, wd.fog.x, Time.deltaTime * transitionSpeed);
-        RenderSettings.fogEndDistance = Mathf.Lerp(RenderSettings.fogEndDistance, wd.fog.y, Time.deltaTime * transitionSpeed);
+        RenderSettings.fogDensity= Mathf.Lerp(RenderSettings.fogDensity, wd.fog, Time.deltaTime * transitionSpeed);
         RenderSettings.fogColor = Color.Lerp(RenderSettings.fogColor, wd.fogColor, Time.deltaTime * transitionSpeed);
 
         // Sun
@@ -203,7 +209,7 @@ public class WeatherDefinition {
     public Color sunColor;
 
     [Header("Fog")]
-    public Vector2 fog;
+    public float fog;
     public Color fogColor;
 
     [Header("Thunder")]

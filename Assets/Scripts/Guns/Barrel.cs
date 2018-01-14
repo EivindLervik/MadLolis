@@ -56,4 +56,10 @@ public class Barrel : GunPart {
     {
         return chambered;
     }
+
+    public float GetDamage()
+    {
+        return DataHandler.GetAmmoType(ammoType).damage;
+        // Implement modefiers
+    }
 }

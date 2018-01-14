@@ -68,8 +68,13 @@ public class CanvasScript : MonoBehaviour {
     private PlayerInteraction playerInteraction;
     private Character player;
 
-    private void Start()
+    // NEW METHOD OF UPDATING
+    private GUI_AirControls airControls;
+
+    private void Awake()
     {
+        airControls = GetComponentInChildren<GUI_AirControls>();
+
         if(up != null && down != null && left != null && right != null)
         {
             up_SP = up.position;
@@ -77,6 +82,9 @@ public class CanvasScript : MonoBehaviour {
             left_SP = left.position;
             right_SP = right.position;
         }
+
+        storage_StorageListOfEntries = new Dictionary<DataHandler.InGameObject, StorageListItem>();
+        storage_PlayerListOfEntries = new Dictionary<DataHandler.InGameObject, StorageListItem>();
 
         CLoseAllMenues();
     }
@@ -128,6 +136,21 @@ public class CanvasScript : MonoBehaviour {
         this.player = player;
     }
 
+#region AirControls
+    public void ShowAirControls()
+    {
+        airControls.Show();
+    }
+    public void UpdateAirControls(List<string> data)
+    {
+        airControls.UpdateGUI(data);
+    }
+    public void HideAirControls()
+    {
+        airControls.Hide();
+    }
+#endregion
+
     #region Speedometer
     public void ShowSpeedometer()
     {
@@ -135,7 +158,7 @@ public class CanvasScript : MonoBehaviour {
     }
     public void HideSpeedometer()
     {
-        speedometer.SetActive(false);
+        CloseMenu(speedometer);
     }
     public void UpdateSpeedometer(float speed)
     {
@@ -144,7 +167,7 @@ public class CanvasScript : MonoBehaviour {
     }
     #endregion
 
-#region Lathe
+    #region Lathe
     public void OpenLatheMenu()
     {
         Cursor.visible = true;
@@ -161,7 +184,7 @@ public class CanvasScript : MonoBehaviour {
     }
     #endregion
 
-#region Storage
+    #region Storage
     public void OpenStorageMenu(Storage storage)
 	{
         Cursor.visible = true;
@@ -171,6 +194,15 @@ public class CanvasScript : MonoBehaviour {
         storage_PlayerName.text = player.characterName;
 
         storage_StorageStorage = storage;
+
+        foreach(KeyValuePair<DataHandler.InGameObject, StorageListItem> kvp in storage_StorageListOfEntries)
+        {
+            Destroy(kvp.Value.gameObject);
+        }
+        foreach (KeyValuePair<DataHandler.InGameObject, StorageListItem> kvp in storage_PlayerListOfEntries)
+        {
+            Destroy(kvp.Value.gameObject);
+        }
 
         storage_StorageListOfEntries = new Dictionary<DataHandler.InGameObject, StorageListItem>();
         storage_PlayerListOfEntries = new Dictionary<DataHandler.InGameObject, StorageListItem>();
@@ -351,7 +383,7 @@ public class CanvasScript : MonoBehaviour {
     }
     #endregion
 
-#region Dialogue
+    #region Dialogue
     public void OpenDialogueMenu(NPC npc)
     {
         Cursor.visible = true;
@@ -490,7 +522,7 @@ public class CanvasScript : MonoBehaviour {
         CloseMenu(lathe_MENU);
         CloseMenu(storage_MENU);
         CloseMenu(dialogue_MENU);
-        //CloseMenu(speedometer);
+        CloseMenu(speedometer);
 
         AllowInput();
     }

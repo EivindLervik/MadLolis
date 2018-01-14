@@ -6,6 +6,7 @@ public class HelicopterMotor : MonoBehaviour {
 
     public Transform model;
     public Transform rotor;
+    public CanvasScript canvas;
 
     public bool on;
 
@@ -49,11 +50,26 @@ public class HelicopterMotor : MonoBehaviour {
     {
         body = GetComponent<Rigidbody>();
         audioSource = GetComponent<AudioSource>();
+
+        canvas.ShowAirControls();
     }
 
     private void Update()
     {
         rotor.Rotate(transform.up, rpm);
+
+        // Update GUI
+        Vector3 planeVector = Vector3.ProjectOnPlane(transform.forward, Vector3.up).normalized;
+        float angle = Vector3.Angle(planeVector, Vector3.forward) * Mathf.Sign(Vector3.Dot(planeVector, Vector3.right) * -1.0f);
+
+        canvas.UpdateAirControls(new List<string>(){
+            transform.position.y.ToString()
+            , upThrottleModifier.keys[upThrottleModifier.keys.Length - 1].time.ToString()
+            , (new Vector3(body.velocity.x, 0.0f, body.velocity.z)).magnitude.ToString()
+            , angle.ToString()
+            , body.velocity.y.ToString()
+            , (rpmChange / 10.0f).ToString()
+        });
     }
 
     void FixedUpdate () {

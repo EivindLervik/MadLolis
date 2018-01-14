@@ -54,6 +54,9 @@ public class CharacterInput : MonoBehaviour {
                             case "DesObj":
                                 Destroy(hit.transform.gameObject);
                                 break;
+                            case "EnemyBodypart":
+                                hit.transform.GetComponent<EnemyBodyPart>().TakeDamage(weapon.GetDamage());
+                                break;
                         }
 
                     }
