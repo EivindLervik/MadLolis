@@ -28,7 +28,7 @@ public class Weapon : MonoBehaviour {
             if (barrel.Fire())
             {
                 canFire = false;
-                canvas.CrosshairEffect(barrel.recoil * stock.recoilModifier, 3);
+                canvas.UpdateCrosshair(new List<string>() { (barrel.recoil * stock.recoilModifier).ToString(), 3.ToString() });
                 StartCoroutine("Fire_C");
                 return true;
             }

@@ -4,12 +4,12 @@ using UnityEngine;
 
 public enum InteractableObject
 {
-    Lathe, Elevator, Welder, Storage, Anvil
+    Lathe, Elevator, Welder, Storage, Anvil, Arcade
 }
 
 public enum InteractableType
 {
-    Use, Open, Activate, Search
+    Use, Open, Activate, Search, Play
 }
 
 public class Interactable : MonoBehaviour {

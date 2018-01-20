@@ -30,11 +30,11 @@ public class PlayerInteraction : MonoBehaviour {
         {
             case "Interactable":
                 interactable = other.GetComponent<Interactable>();
-                canvas.PromptInteraction(interactable.interactableType + " " + interactable.objectName, interactable.activationKey);
+                canvas.OpenInteraction(interactable.interactableType + " " + interactable.objectName, interactable.activationKey);
                 break;
             case "Talkable":
                 npc = other.GetComponent<NPC>();
-                canvas.PromptInteraction("Talk to " + npc.characterName, KeyCode.E);
+                canvas.OpenInteraction("Talk to " + npc.characterName, KeyCode.E);
                 break;
         }
     }
@@ -97,6 +97,10 @@ public class PlayerInteraction : MonoBehaviour {
 					case InteractableObject.Welder:
                         isInMenu = !isInMenu;
                         // Welder
+                        break;
+                    case InteractableObject.Arcade:
+                        isInMenu = !isInMenu;
+                        SceneHandler.GoToScene(((Playable)interactable).sceneChange);
                         break;
                 }
             }

@@ -7,14 +7,14 @@ public class DialogueListItem : MonoBehaviour {
 
     public Text dialogueText;
 
-    private CanvasScript canvasScript;
+    private GUI_Dialogue dialogueScript;
     private DialogueOption option;
     private DialogueChoice dialogueChoice;
     private Button thisButton;
 
-    public void Populate(CanvasScript cs, DialogueOption option, DialogueChoice dialogueChoice, string dialogueText)
+    public void Populate(GUI_Dialogue ds, DialogueOption option, DialogueChoice dialogueChoice, string dialogueText)
     {
-        canvasScript = cs;
+        dialogueScript = ds;
 
         this.option = option;
         this.dialogueChoice = dialogueChoice;
@@ -32,7 +32,7 @@ public class DialogueListItem : MonoBehaviour {
     
     private void ItemClick()
     {
-        canvasScript.ChooseOption(option);
+        dialogueScript.ChooseOption(option);
     }
 
     public void Over()

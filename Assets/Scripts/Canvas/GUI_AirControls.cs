@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class GUI_AirControls : GUI_Element {
 
+    [Header("Air Controls")]
     [Header("Altimeter")]
     public Text altimeterText;
     public RectTransform altimeterBar;

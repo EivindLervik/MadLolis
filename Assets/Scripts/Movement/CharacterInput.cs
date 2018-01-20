@@ -6,6 +6,7 @@ public class CharacterInput : MonoBehaviour {
 
 	public float lookingSensitivity;
 	public Transform cameraRig;
+    public LayerMask weaponLayerMask;
 
 	private CharacterMover motor;
     private Weapon weapon;
@@ -43,8 +44,9 @@ public class CharacterInput : MonoBehaviour {
                 {
                     Ray ray = playerCamera.ViewportPointToRay(new Vector3(0.5F, 0.5F, 0));
                     RaycastHit hit;
-                    if (Physics.Raycast(ray, out hit, weapon.GetRange()))
+                    if (Physics.Raycast(ray, out hit, weapon.GetRange(), weaponLayerMask))
                     {
+                        print(hit.transform.tag);
                         switch (hit.transform.tag)
                         {
                             case "PhysObj":
@@ -56,6 +58,9 @@ public class CharacterInput : MonoBehaviour {
                                 break;
                             case "EnemyBodypart":
                                 hit.transform.GetComponent<EnemyBodyPart>().TakeDamage(weapon.GetDamage());
+                                break;
+                            case "Enemy":
+                                hit.transform.GetComponent<Enemy>().TakeDamage(weapon.GetDamage());
                                 break;
                         }
 

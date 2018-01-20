@@ -16,14 +16,14 @@ public class StorageListItem : MonoBehaviour {
     public Text weight;
     public Image image;
 
-    private CanvasScript canvasScript;
+    private GUI_Storage storageScript;
     private RectTransform myMaster;
     private StorageItem storageItem;
     private Button thisButton;
 
-	public void Populate(CanvasScript cs, RectTransform myMaster, StorageItem si, int amount, StorageListItemClickAction action)
+	public void Populate(GUI_Storage ss, RectTransform myMaster, StorageItem si, int amount, StorageListItemClickAction action)
     {
-        canvasScript = cs;
+        storageScript = ss;
         this.myMaster = myMaster;
         this.storageItem = si;
 
@@ -61,7 +61,7 @@ public class StorageListItem : MonoBehaviour {
 
     private void ItemMove()
     {
-        canvasScript.MoveItemToOtherThan(myMaster, this);
+        storageScript.MoveItemToOtherThan(myMaster, this);
     }
 
     private void ItemUse()

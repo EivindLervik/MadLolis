@@ -22,6 +22,6 @@ public class VehicleController : MonoBehaviour {
 		vehicleMotor.UpdateSteer (Input.GetAxis(steerAxis));
 		vehicleMotor.UpdateThrottle (Input.GetAxis(throttleAxis));
 
-        canvas.UpdateSpeedometer(vehicleMotor.GetSpeed());
+        canvas.UpdateSpeedometer(new List<string>() { vehicleMotor.GetSpeed().ToString() });
 	}
 }
