@@ -35,6 +35,9 @@ public class CanvasScript : MonoBehaviour {
         GetStorage();
         GetInteraction();
         GetDialogue();
+
+        // Setup Start
+        ShowCrosshair();
     }
 
 
@@ -69,8 +72,6 @@ public class CanvasScript : MonoBehaviour {
             characterInput.AllowInput(true);
         }
     }
-
-
 
     private void FreezePlayer()
     {
@@ -278,7 +279,16 @@ public class CanvasScript : MonoBehaviour {
     }
     public void HideInteraction()
     {
-        interactionObject.SetActive(false);
+        ShowCrosshair();
+
+        if (interactionObject)
+        {
+            interaction.Hide();
+        }
+        else
+        {
+            interactionObject.SetActive(false);
+        }
     }
 #endregion
 

@@ -12,6 +12,8 @@ public class GUI_Storage : GUI_Element {
     private Dictionary<DataHandler.InGameObject, StorageListItem> storage_PlayerListOfEntries;
     public Text storage_Name;
     public Text storage_PlayerName;
+    public Text storage_StorageCapacity;
+    public Text storage_PlayerCapacity;
     public RectTransform storage_StorageInventory;
     public RectTransform storage_PlayerInventory;
     public RectTransform storage_StorageEntry;
@@ -28,12 +30,24 @@ public class GUI_Storage : GUI_Element {
         storage_PlayerListOfEntries = new Dictionary<DataHandler.InGameObject, StorageListItem>();
     }
 
+    private void Update()
+    {
+        UpdateStorageCapacity();
+    }
+
+    public void UpdateStorageCapacity()
+    {
+        storage_StorageCapacity.text = storage_StorageStorage.currentWeight + "kg / " + storage_StorageStorage.maxWeight + "kg";
+        storage_PlayerCapacity.text = storage_PlayerStorage.currentWeight + "kg / " + storage_PlayerStorage.maxWeight + "kg";
+    }
+
     public void OpenStorageMenu(Storage storage, Character player)
     {
         storage_Name.text = storage.objectName;
         storage_PlayerName.text = player.characterName;
 
         storage_StorageStorage = storage;
+        UpdateStorageCapacity();
 
         foreach (KeyValuePair<DataHandler.InGameObject, StorageListItem> kvp in storage_StorageListOfEntries)
         {

@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[System.Serializable]
-public class StorageItem {
+[CreateAssetMenu(fileName = "Item", menuName = "Custom/Storage Item")]
+public class StorageItem : ScriptableObject {
 
 	public DataHandler.InGameObject inGameObject;
 	public DataHandler.InGameObjectType inGameObjectType;
